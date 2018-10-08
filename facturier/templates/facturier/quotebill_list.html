@@ -1,0 +1,23 @@
+{%extends "facturier/base.html"%}
+{% load static %}
+{%block content%}
+
+{% for product in object_list %}
+<div class="col-4 p-5">
+    <h2>{{quotebill.ref}}</h2>
+    <a href={% url 'quotebill-detail' quotebill.ref %} class="btn btn-primary" role="button">Lire</a>
+</div>
+{% endfor %}
+<form class="form-inline" action="{% url 'product-list' %}" method="GET">
+    <h5 class="card-header">Search</h5>
+    <div class="card-body">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" placeholder="Recherche Produit">
+            <span class="input-group-btn">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </span>
+        </div>
+    </div>
+</form>
+
+{%endblock%}

@@ -1,0 +1,62 @@
+body {
+    height: 100%;
+    background-image: url('/media/articles/hack.gif');
+    background-size: cover;
+
+    h1 {
+        a {
+
+            text-decoration-line: overline underline;
+            padding: 0.5em;
+        }
+    }
+
+    h2 {
+        background: black;
+        color: yellow;
+        text-align: center;
+        padding: 1em;
+    }
+
+
+
+    .btn {
+        color: yellow;
+        background-color: black;
+        width: 100%;
+        border-color: white;
+    }
+
+    .btn:hover {
+        color: black;
+        background-color: yellow;
+    }
+
+    p {
+        color: white;
+        text-align: center;
+    }
+
+    ul {
+        li {
+            list-style: none;
+
+            a {
+                color: white;
+            }
+
+            a:hover {
+                color: yellow;
+            }
+        }
+    }
+    
+    .info{
+        color: yellow;
+    }
+    .check{
+        background-color: yellow;
+        color: black;
+        width: 15%;
+    }
+}

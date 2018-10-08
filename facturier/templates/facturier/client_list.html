@@ -1,0 +1,23 @@
+{%extends "facturier/base.html"%}
+{% load static %}
+{%block content%}
+
+{% for client in object_list %}
+<div class="col-4 p-5">
+    <h2>{{client.first_name}} {{client.last_name}}</h2>
+    <a href={% url 'client-detail' client.slug %} class="btn btn-primary" role="button">Lire</a>
+</div>
+{% endfor %}
+<form class="form-inline" action="{% url 'index' %}" method="GET">
+    <h5 class="card-header">Search</h5>
+    <div class="card-body">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" placeholder="Recherche First_name">
+            <span class="input-group-btn">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </span>
+        </div>
+    </div>
+</form>
+
+{%endblock%}
