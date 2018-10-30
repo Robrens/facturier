@@ -1,26 +1,14 @@
-"""facturier_project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
+"""facturier_project URL Configuration"""
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from facturier.views import IndexView, ClientDetailView, ClientCreateView, ClientUpdateView, ClientDeleteView, ProductCreateView, ProductDetailView, ProductUpdateView, ProductDeleteView, ProductListView, CreateQuoteBillView, UpdateQuoteBillView, QuoteBillListView, QuoteBillDetailView
-
+from facturier.views import IndexView, ClientDetailView, ClientCreateView, ClientUpdateView, ClientDeleteView
+from facturier.views import ProductCreateView, ProductDetailView, ProductUpdateView, ProductDeleteView, ProductListView
+from facturier.views import CreateQuoteBillView, UpdateQuoteBillView, QuoteBillListView, QuoteBillDetailView, UpdateQuoteBillProductView, QuoteBillPrintView
+from facturier.views import DeleteLineView, CreateLineView, EmailView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,7 +18,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^client/create/$', ClientCreateView.as_view(), name='client-create'),
     url(r'^client/(?P<slug>[-\w]+)/$', ClientDetailView.as_view(), name='client-detail'),
-    url(r'^client/(?P<slug>[-\w]+)/edit/$', ClientUpdateView.as_view(), name='client-edit' ),
+    url(r'^client/(?P<slug>[-\w]+)/edit/e$', ClientUpdateView.as_view(), name='client-edit' ),
     url(r'^client/(?P<slug>[-\w]+)/delete/$', ClientDeleteView.as_view(), name='client-delete' ),
 
     url(r'^product/create/$', ProductCreateView.as_view(), name='product-create'),
@@ -38,9 +26,18 @@ urlpatterns = [
     url(r'^product/(?P<slug>[-\w]+)/$', ProductDetailView.as_view(), name='product-detail'),
     url(r'^product/(?P<slug>[-\w]+)/edit/$', ProductUpdateView.as_view(), name='product-edit' ),
     url(r'^product/(?P<slug>[-\w]+)/delete/$', ProductDeleteView.as_view(), name='product-delete' ),
+    url(r'^product/(?P<slug>[-\w]+)/(?P<field_name>[-\w]+)/edit/$', UpdateQuoteBillProductView.as_view(), name='product-quotebill-edit'),
 
-    url(r'^quotebill/list/$', QuoteBillListView.as_view(), name='quotebill-list'),
+    url(r'^ligne/delete/$', DeleteLineView.as_view(), name='line-quotebill-delete'),
+    url(r'^ligne/add/$', CreateLineView.as_view(), name='line-quotebill-add'),
+
+
+
     url(r'^quotebill/create/$', CreateQuoteBillView.as_view(), name='quotebill-create'),
+    url(r'^quotebill/list/$', QuoteBillListView.as_view(), name='quotebill-list'),
     url(r'^quotebill/(?P<slug>[-\w]+)/$', QuoteBillDetailView.as_view(), name='quotebill-detail'),
-    url(r'^quotebill/(?P<pk>\d+)/$', UpdateQuoteBillView.as_view()),
+    url(r'^quotebill/(?P<slug>[-\w]+)/pdf/$',
+        QuoteBillPrintView.as_view(), name='quotebill-detail-pdf'),
+    url(r'^quotebill/(?P<slug>[-\w]+)/email/$', EmailView.as_view(), name='quotebill-email'),
+    url(r'^quotebill/(?P<slug>[-\w]+)/(?P<field_name>[-\w]+)/edit/$', UpdateQuoteBillView.as_view(), name='quotebill-edit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

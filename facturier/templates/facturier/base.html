@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}">
+    {%block css%}
+    {% endblock %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
     <title>Document</title>
 </head>
 
@@ -25,14 +26,12 @@
     </main>
     <script src="{% static 'jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
+    {%block js%}
+    {%endblock%}
     <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script type="text/javascript">
         $(function () {
             $('#id_orders_table tbody tr').formset({
-                // For inline formsets, be sure to set the prefix, as the default prefix
-                // ('form') isn't correct.
-                // Django appears to generate the prefix from the lowercase plural
-                // name of the related model, with camel-case converted to underscores.
                 prefix: 'ordered_items'
             })
         })

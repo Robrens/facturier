@@ -1,15 +1,40 @@
 body {
   height: 100%;
-  background-image: url("/media/articles/hack.gif");
+  background-image: url("/media/articles/black.jpg");
   background-size: cover; }
-  body h1 a {
-    text-decoration-line: overline underline;
-    padding: 0.5em; }
+  body h1 {
+    padding: 1em;
+    background: black;
+    text-align: center;
+    color: yellow;
+    text-decoration: underline; }
+    body h1 a {
+      text-decoration-line: overline underline;
+      padding: 0.5em; }
   body h2 {
     background: black;
     color: yellow;
     text-align: center;
     padding: 1em; }
+  body label {
+    color: yellow; }
+  body div .infos {
+    display: flex;
+    justify-content: space-around;
+    padding: 2em; }
+  body tbody th {
+    text-align: center; }
+  body td {
+    padding: 0.5em;
+    text-align: center; }
+    body td a.delete-row {
+      padding-left: 2em;
+      color: orangered; }
+    body td a.add-row {
+      color: orangered; }
+  body th {
+    color: yellow;
+    padding: 2em; }
   body .btn {
     color: yellow;
     background-color: black;

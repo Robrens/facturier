@@ -6,10 +6,11 @@
     <p class="">stock :{{product.stock}}</p>
     <p>price: {{product.price}} €</p>
 
-{%if request.user.is_authenticated%}
-<a href="{% url 'product-edit' object.slug %}" class="btn btn-primary" role="button">Modifier le produit</a>
-<a href="{% url 'product-delete' object.slug %}" class="btn btn-primary" role="button">Supprimer le produit</a>
-
-{%endif%}
+    {% if perms.facturier and perms.facturier.changer_product %}
+    <a href="{% url 'product-edit' object.slug %}" class="btn btn-primary" role="button">Modifier le produit</a>
+    {%endif%}
+    {% if perms.facturier and perms.facturier.delete_product %}
+    <a href="{% url 'product-delete' object.slug %}" class="btn btn-primary" role="button">Supprimer le produit</a>
+    {%endif%}
 </div>
 {%endblock%}

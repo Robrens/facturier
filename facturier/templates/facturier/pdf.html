@@ -1,0 +1,59 @@
+{%extends "facturier/base.html"%}
+{% load static %}
+{%block css%}
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    table {
+        border: 1px solid;
+        margin: 0 auto;
+        width: 70%;
+    }
+
+    td,
+    th {
+        text-align: center;
+        border: 1px solid;
+    }
+</style>
+{%endblock%}
+{%block content%}
+<div class="col-8">
+    <table border="0" cellpadding="0" cellspacing="5">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unitary Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for product in quotebill.ligne_set.all %}
+
+            <tr>
+                <td>
+                    {{product.product.name}}
+                </td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.product.price}}€</td>
+                <td><span class="pre-total">{{ product.multiply }}</span>€</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                </td>
+                <td></td>
+                <td></td>
+                <td><span class="total"></span>€</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{%endblock%}
+{%block js%}
+<script src="{% static 'js/devis.js' %}"></script>
+{%endblock%}

@@ -8,8 +8,10 @@
     <p>phone : {{client.phone}}</p>
     <p>mail : {{client.mail}}</p>
 
-    {%if request.user.is_authenticated%}
+    {% if perms.facturier and perms.facturier.change_client %}
     <a href="{% url 'client-edit' object.slug %}" class="btn btn-primary" role="button">Modifier le client</a>
+    {%endif%}
+    {% if perms.facturier and perms.facturier.delete_client %}
     <a href="{% url 'client-delete' object.slug %}" class="btn btn-primary" role="button">Supprimer le client</a>
 
     {%endif%}

@@ -1,9 +1,14 @@
 body {
     height: 100%;
-    background-image: url('/media/articles/hack.gif');
+    background-image: url('/media/articles/black.jpg');
     background-size: cover;
 
     h1 {
+        padding: 1em;
+        background: black;
+        text-align: center;
+        color: yellow;
+        text-decoration: underline;
         a {
 
             text-decoration-line: overline underline;
@@ -18,7 +23,46 @@ body {
         padding: 1em;
     }
 
+    label {
+        color: yellow;
+    }
 
+    div{
+        .infos{
+            display: flex;
+            justify-content: space-around;
+            padding: 2em;
+        }
+        .status{
+           select#id_progress{
+
+           }
+        }
+    }
+
+    tbody{
+        th{
+            text-align: center;
+        }
+    }
+
+    td{
+        padding: 0.5em;
+        text-align: center;
+        a.delete-row{
+            padding-left: 2em;
+            color: orangered;
+        }
+        a.add-row{
+            color: orangered;
+        }
+    }
+
+
+    th{
+        color: yellow;
+        padding: 2em;
+    }
 
     .btn {
         color: yellow;

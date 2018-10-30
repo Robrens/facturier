@@ -1,0 +1,151 @@
+{%extends "facturier/base.html"%}
+{% load static %}
+{%block css%}
+<link rel="stylesheet" href="{% static 'x-editable/dist/bootstrap-editable/css/bootstrap-editable.css'%}">
+{%endblock%}
+{%block content%}
+{% if quotebill.is_bill == False and not is_pdf %}
+<div class="col-8">
+    <h2>{{quotebill.client.full_name}}</h2>
+    <ul>
+        <li>Créé le : {{quotebill.creation_date}}</li>
+        <li>status : <a href="#" class="status" data-name="group" data-type="select" id="progress" data-pk="{{quotebill.id}}"
+                data-url="{% url 'quotebill-edit' quotebill.slug 'progress' %}">{{quotebill.progress}}</a></li>
+        <li>is_bill : <a href="#" class="is_bill" data-name="group" data-type="select" id="is_bill" data-pk="{{quotebill.id}}"
+                data-url="{% url 'quotebill-edit' quotebill.slug 'is_bill' %}">{{quotebill.is_bill}}</a></li>
+        <li>ref : {{quotebill.slug}}
+        </li>
+        {% if not is_pdf %}
+        <li><a href="{% url 'quotebill-detail-pdf' quotebill.slug %}">TO PDF</a></li>
+        <li><a href="{% url 'quotebill-email' quotebill.slug %}">SEND</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+
+<div class="col-8">
+    <table border="0" cellpadding="0" cellspacing="5">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unitary Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            {% for product in quotebill.ligne_set.all %}
+
+            <tr>
+                <td>
+                    <a href="#" class="product-name" data-pk="{{product.product.id}}" data-url="{% url 'product-quotebill-edit' product.product.slug 'name' %}">{{product.product.name}}</a>
+                    <button class='delete' id="{{product.id}}" type="submit">delete</button>
+                </td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.product.price}}€</td>
+                <td><span class="pre-total">{{ product.multiply }}</span>€</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <form action="{% url 'line-quotebill-add' %}" method="post">
+                    {{ formline.as_p }}
+                    <td><button class='add' id="{{ligne.id}}" type="submit">add line</button></td>
+                </form>
+                <td></td>
+                <td></td>
+                <td><span class="total"></span>€</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="col-8">
+    <h2>{{quotebill.client.full_name}}</h2>
+    <ul>
+        <li>Créé le : {{quotebill.creation_date}}</li>
+        <li>status : {{quotebill.progress}}</li>
+        <li>is_bill : {{quotebill.is_bill}}</li>
+        <li>ref : {{quotebill.slug}}
+        </li>
+        {% if not is_pdf %}
+        <li><a href="{% url 'quotebill-detail-pdf' quotebill.slug %}">TO PDF</a></li>
+        <li><a href="{% url 'quotebill-email' quotebill.slug %}">SEND</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div class="col-8">
+    <table border="0" cellpadding="0" cellspacing="5">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unitary Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for product in quotebill.ligne_set.all %}
+
+            <tr>
+                <td>
+                    {{product.product.name}}
+                </td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.product.price}}€</td>
+                <td><span class="pre-total">{{ product.multiply }}</span>€</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                </td>
+                <td></td>
+                <td></td>
+                <td><span class="total"></span>€</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{%endblock%}
+{%block js%}
+<script src="{% static 'x-editable/dist/bootstrap-editable/js/bootstrap-editable.js' %}"></script>
+<script src="{% static 'js/devis.js' %}"></script>
+<script>
+    $(".delete").click(function () {
+        $tr = $(this).closest("tr");
+        $tr.remove();
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'line-quotebill-delete' %}",
+            data: 'pk=' + this.id,
+            success: function () {
+                alert('Object deleted!')
+            }
+        });
+    });
+
+    $(".add").click(function () {
+
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'line-quotebill-add' %}",
+            dataType: "json",
+
+            data: 'pk=' + this.id,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+            success: function (data) {
+                console.log(data["HTTPRESPONSE"]);
+            }
+        });
+    })
+</script>
+{%endblock%}

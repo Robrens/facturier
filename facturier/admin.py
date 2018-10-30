@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from .models import Client, Product, Ligne, QuoteBill
 
-# Register your models here.
+
 class LigneAdmin(admin.StackedInline):
     model = Ligne
 

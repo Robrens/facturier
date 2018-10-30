@@ -2,22 +2,45 @@
 {% load static %}
 {%block content%}
 
-{% for product in object_list %}
+{% for quotebill in object_list %}
 <div class="col-4 p-5">
-    <h2>{{quotebill.ref}}</h2>
-    <a href={% url 'quotebill-detail' quotebill.ref %} class="btn btn-primary" role="button">Lire</a>
+    <h2>{{quotebill.slug}}</h2>
+    <ul>
+        <li>Créé le : {{quotebill.creation_date}}</li>
+        <li>status : {{quotebill.progress}}</li>
+    </ul>
+    {% if perms.facturier and perms.facturier.read_quotebill %}
+    <a href="{% url 'quotebill-detail' quotebill.slug %}">lire</a>
+    {% endif %}
 </div>
 {% endfor %}
-<form class="form-inline" action="{% url 'product-list' %}" method="GET">
-    <h5 class="card-header">Search</h5>
-    <div class="card-body">
-        <div class="input-group">
-            <input type="text" class="form-control" name="q" placeholder="Recherche Produit">
+<div class="col-8">
+    <div class="col-5">
+        <form action="{% url 'quotebill-list' %}" method="GET">
+            <select name="d">
+                <option selected>--------</option>
+                {% for status in progress %}
+                <option value="{{status.0}}">{{status.0}}</option>
+                {% endfor %}
+            </select>
             <span class="input-group-btn">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">search</button>
             </span>
-        </div>
+        </form>
     </div>
-</form>
+    <div class="col-5"></div>
+    <form class="form-inline" action="{% url 'quotebill-list' %}" method="GET">
+        <div class="card-body">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" placeholder="Recherche Produit">
+                <span class="input-group-btn">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
 
 {%endblock%}

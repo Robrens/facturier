@@ -5,15 +5,24 @@
             <li>
                 <a href="{% url 'product-list' %}">Liste Produits</a>
             </li>
+            <li>
+                <a href="{% url 'quotebill-list' %}">Liste des devis</a>
+            </li>
         </ul>
         <ul>
             {%if request.user.is_authenticated%}
+            {% if perms.facturier and perms.facturier.add_client %}
             <li><a href="{% url 'client-create'%}">Créer un client</a></li>
+            {%endif%}
+            {% if perms.facturier and perms.facturier.add_product %}
             <li><a href="{% url 'product-create'%}">Créer un produit</a></li>
+            {%endif%}
+            {% if perms.facturier and perms.facturier.add_quotebill %}
+            <li><a href="{% url 'quotebill-create'%}">Créer un devis</a></li>
             {%endif%}
         </ul>
         <ul>
-            <li>{%if request.user.is_authenticated%}
+            <li>
                 <a class="nav-link" href="#">Bonjour {{request.user.username}}</a>
                 <a class="nav-link" href="/logout">Déconnexion</a>
                 {%else%}

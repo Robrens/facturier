@@ -4,8 +4,10 @@
 
 {% for client in object_list %}
 <div class="col-4 p-5">
-    <h2>{{client.first_name}} {{client.last_name}}</h2>
-    <a href={% url 'client-detail' client.slug %} class="btn btn-primary" role="button">Lire</a>
+    <h2>{{client.full_name}}</h2>
+{% if perms.facturier and perms.facturier.read_client %} 
+<a href={% url 'client-detail' client.slug %} class="btn btn-primary" role="button">Lire</a>
+{%endif%}
 </div>
 {% endfor %}
 <form class="form-inline" action="{% url 'index' %}" method="GET">
