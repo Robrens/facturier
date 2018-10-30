@@ -5,9 +5,9 @@
 {%endblock%}
 {%block content%}
 {% if quotebill.is_bill == False and not is_pdf %}
-<div class="col-8">
-    <h2>{{quotebill.client.full_name}}</h2>
-    <ul>
+<div class="col-12">
+    <h2 class="detailsClient">{{quotebill.client.full_name}}</h2>
+    <ul class="quotebillDetails">
         <li>Créé le : {{quotebill.creation_date}}</li>
         <li>status : <a href="#" class="status" data-name="group" data-type="select" id="progress" data-pk="{{quotebill.id}}"
                 data-url="{% url 'quotebill-edit' quotebill.slug 'progress' %}">{{quotebill.progress}}</a></li>
@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="col-8">
+<div class="col-12 tableProduct">
     <table border="0" cellpadding="0" cellspacing="5">
         <thead>
             <tr>
@@ -38,7 +38,7 @@
 
             {% for product in quotebill.ligne_set.all %}
 
-            <tr>
+            <tr class="ProductListColor">
                 <td>
                     <a href="#" class="product-name" data-pk="{{product.product.id}}" data-url="{% url 'product-quotebill-edit' product.product.slug 'name' %}">{{product.product.name}}</a>
                     <button class='delete' id="{{product.id}}" type="submit">delete</button>
@@ -49,36 +49,41 @@
             </tr>
             {% endfor %}
             <tr>
-                <form action="{% url 'line-quotebill-add' %}" method="post">
-                    {{ formline.as_p }}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="total-e"><span class="total"></span> €</td>
+            </tr>
+            <tr>
+                <form action="{% url 'line-quotebill-add' %}" method="post" class="tableProduct">
+                    <td>{{ formline.product }}
+                    <td>{{ formline.quantity }}</td>
+                    <td>{{ formline.quoteBill }}</td>
                     <td><button class='add' id="{{ligne.id}}" type="submit">add line</button></td>
                 </form>
-                <td></td>
-                <td></td>
-                <td><span class="total"></span>€</td>
             </tr>
         </tbody>
     </table>
 </div>
 {% else %}
-<div class="col-8">
+<div class="col-12">
     <h2>{{quotebill.client.full_name}}</h2>
-    <ul>
+    <ul class="quotebillDetails">
         <li>Créé le : {{quotebill.creation_date}}</li>
         <li>status : {{quotebill.progress}}</li>
         <li>is_bill : {{quotebill.is_bill}}</li>
         <li>ref : {{quotebill.slug}}
         </li>
         {% if not is_pdf %}
-        <li><a href="{% url 'quotebill-detail-pdf' quotebill.slug %}">TO PDF</a></li>
-        <li><a href="{% url 'quotebill-email' quotebill.slug %}">SEND</a></li>
+        <li class="sendMail"><a href="{% url 'quotebill-detail-pdf' quotebill.slug %}">TO PDF</a></li>
+        <li class="sendMail"><a href="{% url 'quotebill-email' quotebill.slug %}">SEND</a></li>
         {% endif %}
     </ul>
 </div>
-<div class="col-8">
+<div class="col-12  tableProduct">
     <table border="0" cellpadding="0" cellspacing="5">
         <thead>
-            <tr>
+            <tr class="ProductListColor">
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Unitary Price</th>
@@ -89,7 +94,7 @@
 
             {% for product in quotebill.ligne_set.all %}
 
-            <tr>
+            <tr class="ProductListColor">
                 <td>
                     {{product.product.name}}
                 </td>
@@ -103,7 +108,7 @@
                 </td>
                 <td></td>
                 <td></td>
-                <td><span class="total"></span>€</td>
+                <td class="total-e"><span class="total"></span> €</td>
             </tr>
         </tbody>
     </table>

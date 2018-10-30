@@ -2,6 +2,9 @@ body {
   height: 100%;
   background-image: url("/media/articles/black.jpg");
   background-size: cover; }
+  body #firstTitle {
+    background: none;
+    font-weight: bold; }
   body h1 {
     padding: 1em;
     background: black;
@@ -46,6 +49,35 @@ body {
   body p {
     color: white;
     text-align: center; }
+  body .quotebillDetails li {
+    color: white;
+    display: flex;
+    justify-content: center; }
+    body .quotebillDetails li a {
+      color: yellow; }
+  body .quoteList li {
+    color: white; }
+  body .readList {
+    text-align: center;
+    color: yellow;
+    padding-top: 1em; }
+  body .tableProduct {
+    display: flex;
+    justify-content: center; }
+    body .tableProduct a {
+      color: white; }
+    body .tableProduct a:hover {
+      color: yellow; }
+  body .ProductListColor {
+    color: orangered; }
+  body .total-e {
+    color: yellow;
+    font-weight: bold;
+    font-size: 1.3em; }
+    body .total-e .total {
+      color: yellow;
+      font-weight: bold;
+      font-size: 1.3em; }
   body ul li {
     list-style: none; }
     body ul li a {

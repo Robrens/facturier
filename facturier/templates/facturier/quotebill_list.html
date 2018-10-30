@@ -5,42 +5,51 @@
 {% for quotebill in object_list %}
 <div class="col-4 p-5">
     <h2>{{quotebill.slug}}</h2>
-    <ul>
+    <ul class="quoteList">
         <li>Créé le : {{quotebill.creation_date}}</li>
         <li>status : {{quotebill.progress}}</li>
+        {% if perms.facturier and perms.facturier.read_quotebill %}
+        <li class="readList"><a href="{% url 'quotebill-detail' quotebill.slug %}">lire</a></li>
+        {% endif %}
     </ul>
-    {% if perms.facturier and perms.facturier.read_quotebill %}
-    <a href="{% url 'quotebill-detail' quotebill.slug %}">lire</a>
-    {% endif %}
 </div>
 {% endfor %}
-<div class="col-8">
-    <div class="col-5">
+
+</div>
+<div class="row">
+    <div class="col-12">
         <form action="{% url 'quotebill-list' %}" method="GET">
-            <select name="d">
-                <option selected>--------</option>
-                {% for status in progress %}
-                <option value="{{status.0}}">{{status.0}}</option>
-                {% endfor %}
-            </select>
-            <span class="input-group-btn">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">search</button>
-            </span>
+            <div class="row">
+                <div class="col-2">
+                    <select name="d">
+                        <option selected></option>
+                        {% for status in progress %}
+                        <option value="{{status.0}}">{{status.0}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-10">
+                    <span class="input-group-btn">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">search</button>
+                    </span>
+                </div>
+            </div>
         </form>
     </div>
-    <div class="col-5"></div>
-    <form class="form-inline" action="{% url 'quotebill-list' %}" method="GET">
-        <div class="card-body">
-            <div class="input-group">
-                <input type="text" class="form-control" name="q" placeholder="Recherche Produit">
-                <span class="input-group-btn">
+    <div class="col-12">
+        <form class="form-inline" action="{% url 'quotebill-list' %}" method="GET">
+            <div class="row">
+                <div class="col-6">
+                    <input type="text" name="q" placeholder="Recherche Produit">
+                </div>
+                <div class="col-5">
+                    <!-- <span class="input-group-btn"> -->
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </span>
+                    <!-- </span> -->
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-</div>
+        </form>
+    </div>
 </div>
 
 {%endblock%}
